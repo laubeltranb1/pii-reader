@@ -1,0 +1,27 @@
+{
+  "entities": [
+    { "id": "1", "label": "DATE", "text": "5th day of December, 2007", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "2", "label": "ENTITY_NAME", "text": "R. C. Boyd Enterprises, LLC", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "3", "label": "COUNTRY", "text": "Texas", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "4", "label": "ADDRESS", "text": "2003 Navasota Cove, Westlake, Texas", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "5", "label": "ENTITY_NAME", "text": "Cano Petroleum, Inc.", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "6", "label": "COUNTRY", "text": "Delaware", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "7", "label": "ADDRESS", "text": "801 Cherry Street, Suite 3200, Fort Worth, Texas 76102", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "8", "label": "PERSON_NAME", "text": "Jeff Johnson", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "9", "label": "PERSON_NAME", "text": "R.C. Boyd", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "10", "label": "JOB_TITLE", "text": "CEO", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "11", "label": "JOB_TITLE", "text": "President", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "12", "label": "MONEY", "text": "$37,500.00", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "13", "label": "DATE", "text": "January 1, 2008", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "14", "label": "DATE", "text": "December 31, 2008", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "15", "label": "MONEY", "text": "$150,000.00", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "16", "label": "DATE", "text": "January 1, 2008", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "17", "label": "DATE", "text": "April 1, 2008", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "18", "label": "DATE", "text": "July 1, 2008", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "19", "label": "DATE", "text": "October 1, 2008", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "20", "label": "MONEY", "text": "Thirty Seven Thousand Five Hundred Dollars", "start": null, "end": null, "confidence": 1.0 },
+    { "id": "21", "label": "MONEY", "text": "One Hundred Fifty Thousand Dollars", "start": null, "end": null, "confidence": 1.0 }
+  ]
+}
+
+
