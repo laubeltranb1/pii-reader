@@ -107,7 +107,7 @@ export async function createRedactedPdfFromText(
     if (d.start < cursor) continue;
     redactedText += originalText.slice(cursor, d.start);
     const length = Math.max(0, d.end - d.start);
-    redactedText += "█".repeat(length || d.label.length || 3);
+    redactedText += "X".repeat(length || d.label.length || 3);
     cursor = d.end;
   }
 
@@ -138,20 +138,19 @@ export async function createRedactedPdfFromText(
   }
   if (currentLine) lines.push(currentLine);
 
+  let currentPage = page;
   let y = height - margin;
   for (const line of lines) {
     if (y < margin) {
-      const newPage = pdfDoc.addPage();
-      y = newPage.getSize().height - margin;
-      newPage.drawText(line, {
-        x: margin,
-        y,
-        size: fontSize,
-        font,
-      });
-    } else {
-      page.drawText(line, { x: margin, y, size: fontSize, font });
+      currentPage = pdfDoc.addPage();
+      y = currentPage.getSize().height - margin;
     }
+    currentPage.drawText(line, {
+      x: margin,
+      y,
+      size: fontSize,
+      font,
+    });
     y -= fontSize * 1.4;
   }
 

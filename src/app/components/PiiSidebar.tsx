@@ -3,22 +3,30 @@
 import React from "react";
 
 import { classNames } from "./classNames";
-import { type PiiSidebarProps } from "../types/PiiSidebar.types";
+import { usePii } from "../contexts/PiiContext";
 
-export function PiiSidebar({
-  fileName,
-  detections,
-  enrichedDetections,
-  selectedDetectionId,
-  selectionPreview,
-  onSelectDetection,
-  onUpdateStatus,
-  onAddFromSelection,
-}: PiiSidebarProps) {
+export function PiiSidebar() {
+  const {
+    fileName,
+    detections,
+    enrichedDetections,
+    selectedDetectionId,
+    selectionPreview,
+    setSelectedDetectionId,
+    updateDetectionStatus,
+    handleAddFromSelection,
+    handleConfirmAll,
+    handleRejectAll,
+  } = usePii();
   const confirmedCount = detections.filter(
     (d) => d.status === "confirmed"
   ).length;
   const pendingCount = detections.filter((d) => d.status === "pending").length;
+  const rejectedCount = detections.filter(
+    (d) => d.status === "rejected"
+  ).length;
+  const allSelected = enrichedDetections.length > 0;
+  const hasDetections = enrichedDetections.length > 0;
 
   return (
     <aside className="flex flex-col gap-3 rounded-2xl border border-slate-800 bg-slate-900/70 p-3 text-xs">
@@ -34,8 +42,45 @@ export function PiiSidebar({
         <div className="text-right text-[11px] text-slate-400">
           <div>{confirmedCount} confirmed</div>
           <div>{pendingCount} pending</div>
+          {rejectedCount > 0 && <div>{rejectedCount} rejected</div>}
         </div>
       </div>
+
+      {hasDetections && (
+        <div className="flex flex-col gap-2 rounded-xl border border-slate-800 bg-slate-950/60 p-2">
+          <div className="flex items-center justify-between gap-2">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={allSelected}
+                onChange={() => {
+                  // Select all functionality - can be extended later
+                }}
+                className="h-3 w-3 rounded border-slate-600 bg-slate-800 text-sky-500 focus:ring-sky-500 focus:ring-offset-0"
+              />
+              <span className="text-[11px] font-medium text-slate-200">
+                Select All ({enrichedDetections.length})
+              </span>
+            </label>
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={handleConfirmAll}
+              className="flex-1 rounded-full bg-emerald-500/20 px-3 py-1.5 text-[11px] font-medium text-emerald-200 hover:bg-emerald-500/30 transition"
+            >
+              Confirm All
+            </button>
+            <button
+              type="button"
+              onClick={handleRejectAll}
+              className="flex-1 rounded-full bg-slate-800 px-3 py-1.5 text-[11px] font-medium text-slate-300 hover:bg-slate-700 transition"
+            >
+              Reject All
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="mt-2 max-h-72 space-y-1 overflow-y-auto pr-1">
         {enrichedDetections.length === 0 && (
@@ -48,7 +93,7 @@ export function PiiSidebar({
         {enrichedDetections.map((d) => (
           <div
             key={d.id}
-            onClick={() => onSelectDetection(d.id)}
+            onClick={() => setSelectedDetectionId(d.id)}
             className={classNames(
               "group flex w-full flex-col gap-1 rounded-xl border px-2 py-2 text-left text-[11px] transition cursor-pointer",
               selectedDetectionId === d.id
@@ -78,7 +123,7 @@ export function PiiSidebar({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onUpdateStatus(d.id, "confirmed");
+                  updateDetectionStatus(d.id, "confirmed");
                 }}
                 className={classNames(
                   "flex-1 rounded-full px-2 py-0.5 text-[10px] font-medium",
@@ -93,7 +138,7 @@ export function PiiSidebar({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onUpdateStatus(d.id, "rejected");
+                  updateDetectionStatus(d.id, "rejected");
                 }}
                 className={classNames(
                   "flex-1 rounded-full px-2 py-0.5 text-[10px] font-medium",
@@ -119,14 +164,14 @@ export function PiiSidebar({
         </p>
         <button
           type="button"
-          onClick={onAddFromSelection}
+          onClick={handleAddFromSelection}
           className="w-full rounded-full bg-slate-800 px-3 py-1.5 text-[11px] font-medium text-slate-100 hover:bg-slate-700"
         >
           Use current text selection
         </button>
         {selectionPreview && (
           <p className="mt-2 line-clamp-3 rounded-md bg-slate-900/80 px-2 py-1 text-[11px] text-slate-300">
-            “{selectionPreview}”
+            "{selectionPreview}";
           </p>
         )}
       </div>

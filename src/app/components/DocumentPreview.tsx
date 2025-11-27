@@ -3,24 +3,27 @@
 import React, { useMemo } from "react";
 
 import { classNames } from "./classNames";
-import { DocumentPreviewProps, Fragment } from "../types/DocumentPreview.types";
+import { usePii } from "../contexts/PiiContext";
+import { type DetectionWithIndex } from "../types/detection.types";
 
-export function DocumentPreview({
-  rawText,
-  detections,
-  selectedDetectionId,
-  onTextMouseUp,
-}: DocumentPreviewProps) {
+type Fragment = {
+  text: string;
+  detection: DetectionWithIndex | null;
+};
+
+export function DocumentPreview() {
+  const { rawText, enrichedDetections, selectedDetectionId, onTextMouseUp } =
+    usePii();
   const fragments: Fragment[] = useMemo(() => {
     if (!rawText) return [];
-    if (detections.length === 0) {
+    if (enrichedDetections.length === 0) {
       return [{ text: rawText, detection: null }];
     }
 
     const parts: Fragment[] = [];
     let cursor = 0;
 
-    for (const d of detections) {
+    for (const d of enrichedDetections) {
       if (d.start > cursor) {
         parts.push({
           text: rawText.slice(cursor, d.start),
@@ -42,7 +45,7 @@ export function DocumentPreview({
     }
 
     return parts;
-  }, [detections, rawText]);
+  }, [enrichedDetections, rawText]);
 
   return (
     <section className="flex min-h-0 flex-1 flex-col gap-3 rounded-2xl border border-slate-800 bg-slate-900/70 p-3">

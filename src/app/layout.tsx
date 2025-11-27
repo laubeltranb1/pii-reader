@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { PiiProvider } from "./contexts/PiiContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PII-reader",
-  description: "PII-reader",
+  title: "PII Redaction Workbench",
+  description: "Upload PDFs, review detected PII, and download redacted versions",
 };
 
 export default function RootLayout({
@@ -27,7 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <PiiProvider>{children}</PiiProvider>
       </body>
     </html>
   );
